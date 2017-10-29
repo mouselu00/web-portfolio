@@ -4,7 +4,7 @@ const sass = require("gulp-sass");
 const jade = require("gulp-jade");
 const plumber = require("gulp-plumber");
 const autoprefixer = require("gulp-autoprefixer");
-const deploy = require("gulp-gh-pages");
+const ghPages = require("gulp-gh-pages");
 
 gulp.task("connect", () => {
   connect.server({
@@ -57,9 +57,8 @@ gulp.task("build" , () => {
   gulp.src("./index.html").pipe(gulp.dest("./dist/"));
 })
 
-gulp.task("deploy", () => {
-  gulp.src("./dist/**/*").pipe(deploy({remoteUrl: "https://github.com/mouselu00/web-portfolio.git",
-    branch: "gh-pages"}));
+gulp.task("deploy", function() {
+  return gulp.src("./dist/**/*").pipe(ghPages());
 });
 
 gulp.task("default", ["jade", "sass", "js", "watch", "connect"]);

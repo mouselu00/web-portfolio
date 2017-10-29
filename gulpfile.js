@@ -58,7 +58,8 @@ gulp.task("build" , () => {
 })
 
 gulp.task("deploy", () => {
-  gulp.src("./dist/**/*").pipe(deploy());
+  gulp.src("./dist/**/*").pipe(deploy({remoteUrl: "https://github.com/mouselu00/web-portfolio.git",
+    branch: "gh-pages"}));
 });
 
 gulp.task("default", ["jade", "sass", "js", "watch", "connect"]);

@@ -4,6 +4,7 @@ const sass = require("gulp-sass");
 const jade = require("gulp-jade");
 const plumber = require("gulp-plumber");
 const autoprefixer = require("gulp-autoprefixer");
+const deploy = require("gulp-gh-pages");
 
 gulp.task("connect", () => {
   connect.server({
@@ -47,6 +48,17 @@ gulp.task("watch", () => {
   gulp.watch("./assets/partials/**/*.jade", ["jade"]);
   gulp.watch("./assets/css/**/*.sass", ["sass"]);
   gulp.watch("./assets/js/**/*.js", ["js"]);
+});
+
+gulp.task("build" , () => {
+  gulp.src("./assets/img/**/*").pipe(gulp.dest("./dist/assets/img/"));
+  gulp.src("./assets/css/main.css").pipe(gulp.dest("./dist/assets/css/"));
+  gulp.src("./assets/js/functions.js").pipe(gulp.dest("./dist/assets/js/"));
+  gulp.src("./index.html").pipe(gulp.dest("./dist/"));
+})
+
+gulp.task("deploy", () => {
+  gulp.src("./dist/**/*").pipe(deploy());
 });
 
 gulp.task("default", ["jade", "sass", "js", "watch", "connect"]);
